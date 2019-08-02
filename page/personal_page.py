@@ -7,7 +7,7 @@ class PersonalPage(Base):
         super().__init__(driver)
 
     def get_collect(self):
-        return self.click_element(PageElements.person_shopcart_id).text
+        return self.get_element(PageElements.person_shopcart_id).text
 
     def click_setting_btn(self):
         self.click_element(PageElements.person_setting_btn_id)
