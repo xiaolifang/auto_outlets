@@ -87,7 +87,7 @@ class Base:
 
     def get_toast(self, toast):
         mess_path = (By.XPATH, "//*[contains(@text,'{}')]".format(toast))
-        return self.get_element(mess_path, timeout=5, poll_frequency=0.5).text
+        return self.get_element(mess_path, timeout=3, poll_frequency=0.5).text
 
     def get_picture(self, name="截图"):
         # 图片名字
@@ -96,3 +96,7 @@ class Base:
         self.driver.get_screenshot_as_file(image_name)
         with open(image_name, "rb") as f:
             allure.attach(name, f.read(), allure.attach_type.PNG)
+
+    def get_login_btn(self):
+        login_btn = (By.XPATH, "//*[contains(@text,'登录')]")
+        self.get_element(login_btn)

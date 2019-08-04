@@ -70,3 +70,33 @@ class TestLogin():
             self.page_obj.login_page().close_login_page()
             print(test_no)
             assert False
+
+    @pytest.mark.parametrize(" test_no,,user, passwd,toast,except_data", get_data().get("fail"))
+    def test_login_fail(self, test_no, user, passwd, toast, except_data):
+        self.page_obj.login_page().login(user, passwd)
+        try:
+            # """找到toast"""
+            # 获取toast消息
+            toast_text = self.page_obj.login_page().get_toast(toast)
+            try:
+                assert toast_text == except_data
+            except AssertionError:
+                self.page_obj.login_page().get_picture()
+                assert False
+
+        except TimeoutException:
+            self.page_obj.login_page().get_picture()
+            assert False
+        finally:
+            try:
+                # 判断登录按钮
+                self.page_obj.login_page().get_login_btn()
+                # 关闭登录按钮
+                self.page_obj.login_page().close_login_page()
+
+            except TimeoutException:
+                self.page_obj.get_personal_page().click_setting_btn()
+                # 截图
+                self.page_obj.login_page().get_picture()
+                self.page_obj.get_setting_page().setting_quit()
+                assert False
