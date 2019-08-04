@@ -17,6 +17,8 @@ class PageElements:
     login_passwd_id = (By.ID, "com.yunmall.lc:id/logon_password_textview")
     # 登录按钮
     login_btn_id = (By.ID, "com.yunmall.lc:id/logon_button")
+    # 登录页面关闭按钮
+    login_close_page_btn_id = (By.ID, "com.yunmall.lc:id/ymtitlebar_left_btn_image")
 
     """个人中心页面"""
     # 我的收藏

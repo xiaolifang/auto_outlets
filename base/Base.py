@@ -1,8 +1,12 @@
+import os
+import time
+import allure
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from appium import webdriver
 
+from APP import BASE_PROJECT
 
-# webdriver.Remote()
 
 class Base:
 
@@ -80,3 +84,15 @@ class Base:
             self.driver.swipe(width * 0.8, height * 0.5, width * 0.3, height * 0.5)
         if tag == 4:
             self.driver.swipe(width * 0.3, height * 0.5, width * 0.8, height * 0.5)
+
+    def get_toast(self, toast):
+        mess_path = (By.XPATH, "//*[contains(@text,'{}')]".format(toast))
+        return self.get_element(mess_path, timeout=5, poll_frequency=0.5).text
+
+    def get_picture(self, name="截图"):
+        # 图片名字
+        image_name = BASE_PROJECT + os.sep + "image" + os.sep + "%d.png" % int(time.time())
+        # 截图
+        self.driver.get_screenshot_as_file(image_name)
+        with open(image_name, "rb") as f:
+            allure.attach(name, f.read(), allure.attach_type.PNG)
